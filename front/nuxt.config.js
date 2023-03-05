@@ -41,10 +41,30 @@ export default {
     '@nuxtjs/auth-next'
   ],
 
+  auth: {
+    strategies: {
+      cookie: {
+        cookie: {
+          // (optional) If set, we check this cookie existence for loggedIn check
+          name: 'XSRF-TOKEN',
+        },
+      },
+      laravelSanctum: {
+        provider: 'laravel/sanctum',
+        url: 'http://localhost:80',
+        endpoints: {
+          login: {url: '/login', method: 'post'},
+          // logout: {url: 'api/logout', method: 'post'},
+          user: {url: '/api/user', method: 'get'}
+        }
+      },
+    }
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'http://localhost',
     credentials: true // Cookieを有効にする
   },
 

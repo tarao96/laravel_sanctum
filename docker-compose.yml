@@ -6,7 +6,7 @@ services:
     image: nginx:1.19-alpine
     container_name: nginx_server_sanctum
     ports:
-      - 80:80
+      - ８０:80
     environment:
       TZ: Asia/Tokyo
     volumes:

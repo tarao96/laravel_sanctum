@@ -4,15 +4,15 @@
       <div class="form-group">
         <div class="form">
           <label for="name">Name</label>
-          <input type="text" id="name" v-model="form.name" />
+          <input type="text" id="name" v-model="name" />
         </div>
         <div class="form">
           <label for="email">E-mail</label>
-          <input type="email" id="email" v-model="form.email" />
+          <input type="email" id="email" v-model="email" />
         </div>
         <div class="form">
           <label for="password">Password</label>
-          <input type="password" id="password" v-model="form.password" />
+          <input type="password" id="password" v-model="password" />
         </div>
         <button @click="login">Login</button>
       </div>
@@ -24,22 +24,32 @@
 export default {
   data() {
     return {
-      form: {
-        name: "",
-        email: "",
-        password: "",
-      },
+      name: "",
+      email: "",
+      password: "",
     };
   },
   methods: {
-    login() {
-      this.$axios.get("/sanctum/csrf-cookie").then((response) => {
-        this.$axios
-          .post("http://localhost/login", { form })
-          .then((response) => {
-            console.log(response.data);
+    async login() {
+      try {
+        await this.$auth
+          .loginWith("laravelSanctum", {
+            data: {
+              email: this.email,
+              password: this.password,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            this.$router.push("/dashboard");
+          })
+          .catch((err) => {
+            console.log(err.response);
           });
-      });
+      } catch (error) {
+        window.alert("ログイン認証失敗");
+        console.log(error);
+      }
     },
   },
 };
@@ -55,7 +65,7 @@ export default {
 .form-wrapper > .card {
   background: #223a70;
   width: 50%;
-  height: 10%;
+  height: 15%;
   display: flex;
   align-items: center;
 }

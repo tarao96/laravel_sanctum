@@ -1,0 +1,2 @@
+# Laravel/Nuxt.js環境でのLaravel Sanctumを用いたログイン認証
+Laravel Sanctumを用いてログイン認証を行ってみたいと思い立ち、今後の一つのモデルとして作成します。

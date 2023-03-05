@@ -20,6 +20,11 @@ RUN apt-get update \
     libfontconfig \
     libssl-dev
 
+# phpredisソースを取得
+RUN git clone https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis
+# 拡張を入れる
+RUN docker-php-ext-install pdo_mysql redis pcntl
+
 COPY ./api /var/www/html
 
 WORKDIR /var/www/html
